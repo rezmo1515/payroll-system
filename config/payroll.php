@@ -1,0 +1,105 @@
+<?php
+
+declare(strict_types=1);
+
+return [
+    'precision' => 0,
+    'settings' => [
+        'standard_days' => 30,
+        'hours_per_day' => 7.33,
+        'overtime_rate' => 1.4,
+        'night_shift_rate' => 1.35,
+        'holiday_rate' => 1.4,
+        'insurance_rate' => 0.07,
+        'tax_free_threshold' => 100000000,
+        'tax_rate' => 0.1,
+        'child_allowance' => 6000000,
+        'spouse_allowance' => 8500000,
+    ],
+    'components' => [
+        'base_salary' => [
+            'title' => 'حقوق پایه ماهانه',
+            'category' => 'حقوق ثابت',
+            'type' => 'earning',
+            'description' => 'حقوق مصوب وزارت کار یا قرارداد.',
+            'expression' => 'base_salary',
+        ],
+        'overtime' => [
+            'title' => 'اضافه کاری',
+            'category' => 'مزایای متغیر',
+            'type' => 'earning',
+            'description' => 'محاسبه بر اساس ساعات اضافه کاری با ضریب قانونی.',
+            'expression' => 'hourly_wage * overtime_rate * overtime_hours',
+        ],
+        'night_shift' => [
+            'title' => 'شب کاری',
+            'category' => 'مزایای متغیر',
+            'type' => 'earning',
+            'description' => 'ساعات شب کاری با ضریب مخصوص.',
+            'expression' => 'hourly_wage * night_shift_rate * night_shift_hours',
+        ],
+        'holiday_overtime' => [
+            'title' => 'کار در تعطیلات',
+            'category' => 'مزایای متغیر',
+            'type' => 'earning',
+            'description' => 'کارکرد تعطیل رسمی با ضریب ۱۴۰٪.',
+            'expression' => 'hourly_wage * holiday_rate * holiday_hours',
+        ],
+        'child_allowance' => [
+            'title' => 'بن اولاد',
+            'category' => 'مزایای رفاهی',
+            'type' => 'earning',
+            'description' => 'حق اولاد برای هر فرزند.',
+            'expression' => 'child_allowance * children_count',
+        ],
+        'spouse_allowance' => [
+            'title' => 'حق همسر',
+            'category' => 'مزایای رفاهی',
+            'type' => 'earning',
+            'description' => 'مزیت برای کارگران متأهل.',
+            'expression' => 'has_spouse ? spouse_allowance : 0',
+        ],
+        'extra_benefits' => [
+            'title' => 'سایر مزایا',
+            'category' => 'مزایای توافقی',
+            'type' => 'earning',
+            'description' => 'مزایای سفارشی مانند پاداش یا کارانه.',
+            'expression' => 'extra_benefits',
+        ],
+        'absence_deduction' => [
+            'title' => 'کسر غیبت',
+            'category' => 'کسورات قراردادی',
+            'type' => 'deduction',
+            'description' => 'غیبت غیرمجاز بر اساس مزد روزانه.',
+            'expression' => 'daily_wage * absence_days',
+        ],
+        'insurance' => [
+            'title' => 'بیمه سهم کارمند',
+            'category' => 'کسورات قانونی',
+            'type' => 'deduction',
+            'description' => '۷٪ بیمه تأمین اجتماعی از حقوق پایه.',
+            'expression' => 'insurance',
+        ],
+        'income_tax' => [
+            'title' => 'مالیات حقوق',
+            'category' => 'کسورات قانونی',
+            'type' => 'deduction',
+            'description' => 'محاسبه پس از کسر معافیت سالانه.',
+            'expression' => 'income_tax',
+        ],
+        'loan_installment' => [
+            'title' => 'اقساط وام',
+            'category' => 'کسورات توافقی',
+            'type' => 'deduction',
+            'description' => 'بازپرداخت وام پرسنلی.',
+            'expression' => 'loan_installment',
+        ],
+        'other_deductions' => [
+            'title' => 'سایر کسورات',
+            'category' => 'کسورات توافقی',
+            'type' => 'deduction',
+            'description' => 'کسر سایر موارد مانند جرائم.',
+            'expression' => 'other_deductions',
+        ],
+    ],
+];
