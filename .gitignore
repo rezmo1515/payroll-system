@@ -1,8 +1,8 @@
 /vendor/
-/storage/
+/node_modules/
+/.phpunit.result.cache
 /.idea/
 /.vscode/
-/node_modules/
-.DS_Store
-.phpunit.result.cache
-composer.lock
+/storage/logs/*.log
+/storage/framework/*
+/.DS_Store
